@@ -1,18 +1,17 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import ImageTest from './ImageTest';
+import ChatWindow from "./ChatWindow";
 
 function App() {
-
-
-  
   return (
     <div className="App">
-      <ImageTest />
-
-      <h1 class="text-xl font-bold underline">
-        Hello world!
-      </h1>
+      <div className='flex h-screen'>
+        <div className='w-2/5 border-r border-gray-100'>
+          <ChatWindow />
+        </div>
+        <div className='w-3/5'>
+        </div>
+      </div>
     </div>
   );
 }
