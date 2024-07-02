@@ -8,36 +8,53 @@ function ChatWindow() {
     { sender: "bot", text: "This is also from bot"},
   ]);
   const [newMessage, setNewMessage] = useState('');
+  const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
   function scrollToBottom() {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   }
 
+  function mapBotAndUserMessages() {
+    const mapped = messages.map((message, index) => message.sender === "user" ?
+      <UserChatBubble key={index} message={message.text} />
+      :
+      <BotChatBubble key={index} message={message.text} />
+    );
+    setMappedMessages(mapped);
+  }
+
   useEffect(() => {
     scrollToBottom();
+    mapBotAndUserMessages();
   }, [messages]);
 
   function handleSendMessage(event) {
     event.preventDefault();
-    setMessages([... messages, { sender: "user", text: newMessage }]);
+    const updatedMessages = [...messages, { sender: "user", text: newMessage }];
+    setMessages(updatedMessages);
+    getBotReply(newMessage, updatedMessages);
     setNewMessage('');
   }
 
-  function handleBotSendMessage(event) {
-    event.preventDefault();
-    setMessages([... messages, { sender: "bot", text: newMessage }]);
-    setNewMessage('');
+  async function getBotReply(payload, currentMessages) {
+    try {
+      const response = await fetch("http://localhost:8080/chat/userMessage", {
+        method: "POST",
+        body: payload,
+      });
+      var msg = await response.json();
+      const updatedMessages = [...currentMessages, { sender: "bot", text: msg.message }];
+      setMessages(updatedMessages);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
       <div className="ChatWindow flex flex-col bottom-10 h-screen">
         <div className="flex-1 space-y-4 px-4 h-full overflow-y-auto">
-          {messages.map((message, index) => message.sender === "user" ? 
-            <UserChatBubble key={index} message={message.text} />
-            :
-            <BotChatBubble key={index} message={message.text} />
-          )}
+          {mappedMessages}
           <div ref={messagesEndRef} />
         </div>
         <div className="h-10 mb-5 ml-5 mr-5 flex items-center pl-2 border-2 border-gray-100 rounded-xl">
@@ -45,7 +62,6 @@ function ChatWindow() {
           <button type="submit" className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none" onClick={handleSendMessage}>Send</button>
         </div>
 
-        <button onClick={handleBotSendMessage}>Bot Reply</button>
       </div>
     );
 }
