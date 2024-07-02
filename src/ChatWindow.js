@@ -37,14 +37,17 @@ function ChatWindow() {
     setNewMessage('');
   }
 
-  async function getBotReply(payload, currentMessages) {
+  async function getBotReply(content, currentMessages) {
     try {
       const response = await fetch("http://localhost:8080/chat/userMessage", {
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
-        body: payload,
+        body: JSON.stringify({ content: content }),
       });
       var msg = await response.json();
-      const updatedMessages = [...currentMessages, { sender: "bot", text: msg.message }];
+      const updatedMessages = [...currentMessages, { sender: "bot", text: msg.content }];
       setMessages(updatedMessages);
     } catch (e) {
       console.error(e);
