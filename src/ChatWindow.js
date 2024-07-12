@@ -39,12 +39,13 @@ function ChatWindow() {
 
   async function getBotReply(content, currentMessages) {
     try {
-      const response = await fetch("http://localhost:8080/chat/userMessage", {
+      const response = await fetch("http://localhost:8080/chat/testAPI", {
+      // const response = await fetch("http://localhost:8080/chat/userMessage", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ content: content }),
+        body: JSON.stringify({ role: "user", content: content }),
       });
       var msg = await response.json();
       const updatedMessages = [...currentMessages, { sender: "bot", text: msg.content }];
