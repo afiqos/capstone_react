@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setShops } from "./store/shopSlice";
+import { setShops } from "../store/shopSlice";
 
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";

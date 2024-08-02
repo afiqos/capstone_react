@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectShops } from "./store/shopSlice";
+import { selectShops } from "../store/shopSlice";
 import ShopCard from "./ShopCard";
 
 function ViewWindow() {

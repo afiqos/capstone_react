@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import ChatWindow from "./ChatWindow";
-import ViewWindow from './ViewWindow';
+import ChatWindow from "./components/ChatWindow";
+import ViewWindow from './components/ViewWindow';
 
 function App() {
   return (
