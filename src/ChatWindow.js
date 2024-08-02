@@ -3,7 +3,28 @@ import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
 function ChatWindow() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {sender: "bot", text: "test bot"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+    {sender: "user", text: "test user"},
+  ]);
   const [newMessage, setNewMessage] = useState('');
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
@@ -53,7 +74,7 @@ function ChatWindow() {
 
   // This empty array useEffect will only run on initial render
   useEffect(() => {
-    getInitMessage();
+    // getInitMessage();
   }, []);
 
 
