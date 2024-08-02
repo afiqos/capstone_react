@@ -1,29 +1,33 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setShops } from "./store/shopSlice";
+
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
 function ChatWindow() {
+  const dispatch = useDispatch();
   const [messages, setMessages] = useState([
-    {sender: "bot", text: "test bot"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
-    {sender: "user", text: "test user"},
+    // {sender: "bot", text: "test bot"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
+    // {sender: "user", text: "test user"},
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [mappedMessages, setMappedMessages] = useState([]);
@@ -74,7 +78,7 @@ function ChatWindow() {
 
   // This empty array useEffect will only run on initial render
   useEffect(() => {
-    // getInitMessage();
+    getInitMessage();
   }, []);
 
 
@@ -98,6 +102,9 @@ function ChatWindow() {
       var msg = await response.json();
       const updatedMessages = [...currentMessages, { sender: "bot", text: msg.content }];
       setMessages(updatedMessages);
+
+      // Take viewShops and initialize ViewWindow grid with ShopCards
+      dispatch(setShops(msg.viewShops));
     } catch (e) {
       console.error(e);
     }
