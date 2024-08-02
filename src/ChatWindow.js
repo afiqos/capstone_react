@@ -39,8 +39,9 @@ function ChatWindow() {
 
   async function getBotReply(content, currentMessages) {
     try {
-      const response = await fetch("http://localhost:8080/chat/testAPI", {
+      // const response = await fetch("http://localhost:8080/chat/testAPI", {
       // const response = await fetch("http://localhost:8080/chat/userMessage", {
+      const response = await fetch("http://localhost:8080/chat/newMessage", {
         headers: {
           "Content-Type": "application/json",
         },
