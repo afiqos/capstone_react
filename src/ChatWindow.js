@@ -3,10 +3,7 @@ import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
 function ChatWindow() {
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "This is bot"},
-    { sender: "bot", text: "This is also from bot"},
-  ]);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
@@ -24,10 +21,41 @@ function ChatWindow() {
     setMappedMessages(mapped);
   }
 
+  /*
+    Triggered when messages state changes, do not put backend calls into this.
+    useEffect calls backend -> backend replies -> state messages updates -> useEffect triggered again
+    -> infinite loop -> API money = 0;
+  */
   useEffect(() => {
     scrollToBottom();
     mapBotAndUserMessages();
   }, [messages]);
+
+  async function getInitMessage() {
+    try {
+      console.log("start");
+      // const response = await fetch("http://localhost:8080/chat/testAPI", {
+      const response = await fetch("http://localhost:8080/chat/firstMessage", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+      });
+      var msg = await response.json();
+      var messageReply = JSON.parse(msg.content);
+      const updatedMessages = [...messages, { sender: "bot", text: messageReply.nextMessage}];
+      setMessages(updatedMessages);
+      console.log("end");
+    } catch (error) {
+      console.error(error); 
+    }
+  }
+
+  // This empty array useEffect will only run on initial render
+  useEffect(() => {
+    getInitMessage();
+  }, []);
+
 
   function handleSendMessage(event) {
     event.preventDefault();
@@ -39,8 +67,6 @@ function ChatWindow() {
 
   async function getBotReply(content, currentMessages) {
     try {
-      // const response = await fetch("http://localhost:8080/chat/testAPI", {
-      // const response = await fetch("http://localhost:8080/chat/userMessage", {
       const response = await fetch("http://localhost:8080/chat/newMessage", {
         headers: {
           "Content-Type": "application/json",
