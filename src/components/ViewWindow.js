@@ -10,23 +10,15 @@ function ViewWindow() {
     </li>
   );
   return (
-    <div className="ViewWindow h-full overflow-y-scroll bg-blue-100 p-4">
+    <div className="ViewWindow h-full overflow-y-scroll p-4">
       <div className="GridView grid grid-cols-3 gap-2">
+        {/* <ShopCard />
         <ShopCard />
         <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ShopCard />
-        <ul>{listShops}</ul>
+        <ul>{listShops}</ul> */}
+        {viewShops.map((shop, index) => (
+          <ShopCard key={index} shop={shop} />
+        ))}
       </div>
     </div>
   );
