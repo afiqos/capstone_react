@@ -5,9 +5,9 @@ import { setShops } from "../store/shopSlice";
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
-function ChatWindow() {
+function ChatWindow({messages, setMessages}) {
   const dispatch = useDispatch();
-  const [messages, setMessages] = useState([
+  // const [messages, setMessages] = useState([
     // {sender: "bot", text: "test bot"},
     // {sender: "user", text: "test user"},
     // {sender: "user", text: "test user"},
@@ -28,7 +28,7 @@ function ChatWindow() {
     // {sender: "user", text: "test user"},
     // {sender: "user", text: "test user"},
     // {sender: "user", text: "test user"},
-  ]);
+  // ]);
   const [newMessage, setNewMessage] = useState('');
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
