@@ -12,7 +12,10 @@ function ChatWindow({messages, setMessages}) {
   const messagesEndRef = useRef(null);
 
   function scrollToBottom() {
-    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+    // messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+    }, 100);
   }
 
   function mapBotAndUserMessages() {
@@ -32,8 +35,6 @@ function ChatWindow({messages, setMessages}) {
   useEffect(() => {
     scrollToBottom();
     mapBotAndUserMessages();
-    console.log("Updating messages");
-    console.log(messages.slice(-2));
   }, [messages]);
 
   async function getInitMessage() {
