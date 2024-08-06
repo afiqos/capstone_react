@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
-import { selectShops } from "../store/shopSlice";
+import { useDispatch } from "react-redux";
+import { selectShops, setShops } from "../store/shopSlice";
 import ShopCard from "./ShopCard";
 
 function ViewWindow({ messages, setMessages }) {
+  const dispatch = useDispatch();
   const viewShops = useSelector(selectShops);
   const listShops = viewShops.map(shop =>
     <li>
@@ -12,19 +14,47 @@ function ViewWindow({ messages, setMessages }) {
 
   function handleShopCardClick(shop) {
     console.log(`Shop card: ${shop} clicked`);
-    sendSelectedShop(shop);
-    setMessages( [...messages, { sender: "user", text: `${shop.shopName} at ${shop.address} selected.` }])
+    proceedReviewWithSelectedShop(shop);
+    dispatch(setShops([])); // clear the view
   }
 
-  async function sendSelectedShop(selectedShop) {
+  async function proceedReviewWithSelectedShop(selectedShop) {
     try {
-      const response = await fetch("http://localhost:8080/chat/selectShop", {
+      // Send data for selected shop
+      fetch("http://localhost:8080/chat/selectShop", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify(selectedShop)
+      })
+      .then(response => response.json()) // Convert the response to JSON
+      .then(data => {
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { sender: "bot", text: data.content }
+        ]);
+    
+        // Proceed with the second fetch call to start review
+        return fetch("http://localhost:8080/chat/newMessage", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({ role: "user", content: "I am now ready to fill up the review" }),
+        });
+      })
+      .then(response => response.json())
+      .then(data => {
+        setMessages(prevMessages => [
+          ...prevMessages,
+          { sender: "bot", text: data.content }
+        ]);
+      })
+      .catch(error => {
+        console.error("Error:", error);
       });
+
     } catch (e) {
       console.error(e);
     }
