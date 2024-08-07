@@ -105,7 +105,7 @@ function ChatWindow({messages, setMessages}) {
 
   async function processImage(file) {
     uploadImage(file)
-    .then(shareUploadedFilename(file.name))
+    .then(response => shareUploadedFilename(response))
     .then(addImageToChatWindow(URL.createObjectURL(file)))
     .catch(error => {
       console.error("Error: ", error);
@@ -123,20 +123,21 @@ function ChatWindow({messages, setMessages}) {
         method: "POST",
         body: formData,
       });
-      console.log(await response);
+      var msg = await response.json();
+      return await msg.imageId;
     } catch (e) {
       console.error(e);
     }
   }
 
-  async function shareUploadedFilename(filename) {
+  async function shareUploadedFilename(imageId) {
     try {
       const response = await fetch("http://localhost:8080/chat/newMessage", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ role: "user", content: `${filename} uploaded.` }),
+        body: JSON.stringify({ role: "user", content: `uploaded imageId: ${imageId}` }),
       });
       var msg = await response.json(); // unused result
     } catch (e) {
