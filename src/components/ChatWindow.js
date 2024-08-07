@@ -12,7 +12,6 @@ function ChatWindow({messages, setMessages}) {
   const messagesEndRef = useRef(null);
 
   function scrollToBottom() {
-    // messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
     }, 100);
@@ -96,6 +95,32 @@ function ChatWindow({messages, setMessages}) {
       handleSendMessage(event);
     }
   }
+  
+  function handleFileChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      setMessages([...messages, { sender: "user", text: URL.createObjectURL(event.target.files[0])}]);
+      uploadImage(file);
+    }
+  }
+
+  async function uploadImage(file) {
+    // need trigger this same time send is pressed? or immediate after image selected
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log(file);
+
+    try {
+      const response = await fetch("http://localhost:8080/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+      console.log(await response);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
       <div className="ChatWindow flex flex-col bottom-10 h-screen">
@@ -104,6 +129,7 @@ function ChatWindow({messages, setMessages}) {
           <div ref={messagesEndRef} />
         </div>
         <div className="h-10 mb-5 ml-5 mr-5 flex items-center pl-2 border-2 border-gray-100 rounded-xl">
+          <input type="file" name="imageFile" onChange={handleFileChange} />
           <input type="text" placeholder="Type your message..." className="flex-1" value={newMessage} onChange={(e) => { setNewMessage(e.target.value) }} onKeyDown={handleEnterKeyDown}/>
           <button type="submit" className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none" onClick={handleSendMessage}>Send</button>
         </div>

@@ -24,11 +24,11 @@ function ImageTest() {
     formData.append("file", imageFile);
 
     try {
-      const response = await fetch("http://localhost:8080/", {
+      const response = await fetch("http://localhost:8080/image/upload", {
         method: "POST",
         body: formData,
       });
-      console.log(await response.json());
+      console.log(await response);
     } catch (e) {
       console.error(e);
     }
