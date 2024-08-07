@@ -99,14 +99,21 @@ function ChatWindow({messages, setMessages}) {
   function handleFileChange(event) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
-      setMessages([...messages, { sender: "user", text: URL.createObjectURL(event.target.files[0])}]);
-      uploadImage(file);
+      processImage(file);
     }
   }
 
+  async function processImage(file) {
+    uploadImage(file)
+    .then(shareUploadedFilename(file.name))
+    .then(addImageToChatWindow(URL.createObjectURL(file)))
+    .catch(error => {
+      console.error("Error: ", error);
+    });
+  }
+
+  // uploads image immediately after image picked
   async function uploadImage(file) {
-    // need trigger this same time send is pressed? or immediate after image selected
     const formData = new FormData();
     formData.append("file", file);
     console.log(file);
@@ -120,6 +127,25 @@ function ChatWindow({messages, setMessages}) {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  async function shareUploadedFilename(filename) {
+    try {
+      const response = await fetch("http://localhost:8080/chat/newMessage", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ role: "user", content: `${filename} uploaded.` }),
+      });
+      var msg = await response.json(); // unused result
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function addImageToChatWindow(imageUrl) {
+    setMessages([...messages, { sender: "user", text: imageUrl}]);
   }
 
   return (
