@@ -167,24 +167,33 @@ function ChatWindow({ messages, setMessages }) {
   }
 
   return (
-    <div className="ChatWindow flex flex-col bottom-10 h-screen">
+    <div className="ChatWindow flex flex-col h-screen p-4">
       <div className="flex-1 space-y-4 px-4 h-full overflow-y-auto">
         {mappedMessages}
         <div ref={messagesEndRef} />
       </div>
-      <div className="h-10 mb-5 ml-5 mr-5 flex items-center pl-2 border-2 border-gray-100 rounded-xl">
-        <input type="file" name="imageFile" onChange={handleFileChange} />
+      <div className="flex items-center p-2 border-2 border-gray-100 rounded-xl bg-white shadow-lg">
+        {/* <input type="file" name="imageFile" onChange={handleFileChange} /> */}
+        <label className="py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 cursor-pointer">
+          Add Image
+          <input
+            type="file"
+            name="imageFile"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
         <input
           type="text"
           placeholder="Type your message..."
-          className="flex-1"
+          className="flex-1 mx-2 p-2 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={newMessage}
           onChange={handleTextInputChange}
           onKeyDown={handleEnterKeyDown}
         />
         <button
           type="submit"
-          className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none"
+          className="py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none"
           onClick={handleSendMessage}
         >
           Send
