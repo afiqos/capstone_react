@@ -5,9 +5,9 @@ import { setIntent, setShops } from "../store/shopSlice";
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
-function ChatWindow({messages, setMessages}) {
+function ChatWindow({ messages, setMessages }) {
   const dispatch = useDispatch();
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
@@ -18,10 +18,12 @@ function ChatWindow({messages, setMessages}) {
   }
 
   function mapBotAndUserMessages() {
-    const mapped = messages.map((message, index) => message.sender === "user" ?
-      <UserChatBubble key={index} message={message.text} />
-      :
-      <BotChatBubble key={index} message={message.text} />
+    const mapped = messages.map((message, index) =>
+      message.sender === "user" ? (
+        <UserChatBubble key={index} message={message.text} />
+      ) : (
+        <BotChatBubble key={index} message={message.text} />
+      )
     );
     setMappedMessages(mapped);
   }
@@ -48,11 +50,14 @@ function ChatWindow({messages, setMessages}) {
       });
       var msg = await response.json();
       var messageReply = JSON.parse(msg.content);
-      const updatedMessages = [...messages, { sender: "bot", text: messageReply.nextMessage}];
+      const updatedMessages = [
+        ...messages,
+        { sender: "bot", text: messageReply.nextMessage },
+      ];
       setMessages(updatedMessages);
       console.log("end");
     } catch (error) {
-      console.error(error); 
+      console.error(error);
     }
   }
 
@@ -61,13 +66,12 @@ function ChatWindow({messages, setMessages}) {
     getInitMessage();
   }, []);
 
-
   function handleSendMessage(event) {
     event.preventDefault();
     const updatedMessages = [...messages, { sender: "user", text: newMessage }];
     setMessages(updatedMessages);
     getBotReply(newMessage, updatedMessages);
-    setNewMessage('');
+    setNewMessage("");
   }
 
   async function getBotReply(content, currentMessages) {
@@ -80,7 +84,10 @@ function ChatWindow({messages, setMessages}) {
         body: JSON.stringify({ role: "user", content: content }),
       });
       var msg = await response.json();
-      const updatedMessages = [...currentMessages, { sender: "bot", text: msg.content }];
+      const updatedMessages = [
+        ...currentMessages,
+        { sender: "bot", text: msg.content },
+      ];
       setMessages(updatedMessages);
 
       // Take viewShops and initialize ViewWindow grid with ShopCards
@@ -92,11 +99,11 @@ function ChatWindow({messages, setMessages}) {
   }
 
   function handleEnterKeyDown(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSendMessage(event);
     }
   }
-  
+
   function handleFileChange(event) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
@@ -106,11 +113,11 @@ function ChatWindow({messages, setMessages}) {
 
   async function processImage(file) {
     uploadImage(file)
-    .then(response => shareUploadedFilename(response))
-    .then(addImageToChatWindow(URL.createObjectURL(file)))
-    .catch(error => {
-      console.error("Error: ", error);
-    });
+      .then((response) => shareUploadedFilename(response))
+      .then(addImageToChatWindow(URL.createObjectURL(file)))
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   }
 
   // uploads image immediately after image picked
@@ -138,7 +145,10 @@ function ChatWindow({messages, setMessages}) {
           "Content-Type": "application/json",
         },
         method: "POST",
-        body: JSON.stringify({ role: "user", content: `uploaded imageId: ${imageId}` }),
+        body: JSON.stringify({
+          role: "user",
+          content: `uploaded imageId: ${imageId}`,
+        }),
       });
       var msg = await response.json(); // unused result
     } catch (e) {
@@ -147,23 +157,37 @@ function ChatWindow({messages, setMessages}) {
   }
 
   function addImageToChatWindow(imageUrl) {
-    setMessages([...messages, { sender: "user", text: imageUrl}]);
+    setMessages([...messages, { sender: "user", text: imageUrl }]);
   }
 
   return (
-      <div className="ChatWindow flex flex-col bottom-10 h-screen">
-        <div className="flex-1 space-y-4 px-4 h-full overflow-y-auto">
-          {mappedMessages}
-          <div ref={messagesEndRef} />
-        </div>
-        <div className="h-10 mb-5 ml-5 mr-5 flex items-center pl-2 border-2 border-gray-100 rounded-xl">
-          <input type="file" name="imageFile" onChange={handleFileChange} />
-          <input type="text" placeholder="Type your message..." className="flex-1" value={newMessage} onChange={(e) => { setNewMessage(e.target.value) }} onKeyDown={handleEnterKeyDown}/>
-          <button type="submit" className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none" onClick={handleSendMessage}>Send</button>
-        </div>
-
+    <div className="ChatWindow flex flex-col bottom-10 h-screen">
+      <div className="flex-1 space-y-4 px-4 h-full overflow-y-auto">
+        {mappedMessages}
+        <div ref={messagesEndRef} />
       </div>
-    );
+      <div className="h-10 mb-5 ml-5 mr-5 flex items-center pl-2 border-2 border-gray-100 rounded-xl">
+        <input type="file" name="imageFile" onChange={handleFileChange} />
+        <input
+          type="text"
+          placeholder="Type your message..."
+          className="flex-1"
+          value={newMessage}
+          onChange={(e) => {
+            setNewMessage(e.target.value);
+          }}
+          onKeyDown={handleEnterKeyDown}
+        />
+        <button
+          type="submit"
+          className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none"
+          onClick={handleSendMessage}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default ChatWindow;

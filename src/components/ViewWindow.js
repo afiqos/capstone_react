@@ -17,7 +17,6 @@ function ViewWindow({ messages, setMessages }) {
     if (intent == "ADD_REVIEW") {
       proceedReviewWithSelectedShop(shop);
       dispatch(setShops([])); // clear the view
-
     } else if (intent == "RECOMMEND") {
       setSelectedShop(shop);
       if (shop.reviews.length != 0) {
