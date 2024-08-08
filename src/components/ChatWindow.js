@@ -7,6 +7,7 @@ import UserChatBubble from "./UserChatBubble";
 
 function ChatWindow({ messages, setMessages }) {
   const dispatch = useDispatch();
+  const [enableChatInput, setEnableChatInput] = useState(true);
   const [newMessage, setNewMessage] = useState("");
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
@@ -76,6 +77,8 @@ function ChatWindow({ messages, setMessages }) {
 
   async function getBotReply(content, currentMessages) {
     try {
+      setEnableChatInput(false);
+
       const response = await fetch("http://localhost:8080/chat/newMessage", {
         headers: {
           "Content-Type": "application/json",
@@ -95,6 +98,8 @@ function ChatWindow({ messages, setMessages }) {
       dispatch(setIntent(msg.intent));
     } catch (e) {
       console.error(e);
+    } finally {
+      setEnableChatInput(true);
     }
   }
 
@@ -173,7 +178,6 @@ function ChatWindow({ messages, setMessages }) {
         <div ref={messagesEndRef} />
       </div>
       <div className="flex items-center p-2 border-2 border-gray-100 rounded-xl bg-white shadow-lg">
-        {/* <input type="file" name="imageFile" onChange={handleFileChange} /> */}
         <label className="py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 cursor-pointer">
           Add Image
           <input
@@ -193,8 +197,11 @@ function ChatWindow({ messages, setMessages }) {
         />
         <button
           type="submit"
-          className="py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 focus:outline-none"
+          className={`py-2 px-4 rounded-xl focus:outline-none ${
+            enableChatInput && newMessage.trim() !== '' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'
+          }`}
           onClick={handleSendMessage}
+          disabled={!enableChatInput || newMessage.trim() === ''}
         >
           Send
         </button>
