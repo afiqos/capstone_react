@@ -10,10 +10,14 @@ function ShopCard({ shop, onClick }) {
     >
       <div className="h-1/2">
         <img
-          src="logo192.png"
+          src={
+            shop.reviews && shop.reviews.length > 0
+              ? `http://localhost:8080/upload-dir/${shop.reviews[0].reviewImage.filename}`
+              : "defaultShopLogo.png"
+          }
           alt="Shop logo"
           className="h-full w-full object-contain rounded-t-lg"
-        ></img>
+        />
       </div>
       <div className="flex justify-between mt-2">
         <p className="text-left font-bold">{shop.shopName}</p>
