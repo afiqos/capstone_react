@@ -98,6 +98,12 @@ function ChatWindow({ messages, setMessages }) {
     }
   }
 
+  function handleTextInputChange(e) {
+    if (e.target.value.length <= 140) { // limit input to 140 characters
+      setNewMessage(e.target.value);
+    }
+  }
+
   function handleEnterKeyDown(event) {
     if (event.key === "Enter") {
       handleSendMessage(event);
@@ -173,9 +179,7 @@ function ChatWindow({ messages, setMessages }) {
           placeholder="Type your message..."
           className="flex-1"
           value={newMessage}
-          onChange={(e) => {
-            setNewMessage(e.target.value);
-          }}
+          onChange={handleTextInputChange}
           onKeyDown={handleEnterKeyDown}
         />
         <button
