@@ -110,7 +110,7 @@ function ChatWindow({ messages, setMessages }) {
   }
 
   function handleEnterKeyDown(event) {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && enableChatInput && newMessage.trim() !== '') {
       handleSendMessage(event);
     }
   }
