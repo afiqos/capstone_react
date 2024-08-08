@@ -25,6 +25,11 @@ function ViewWindow({ messages, setMessages }) {
     }
   }
 
+  function handleBackToShopsClick() {
+    setSelectedShop(null);
+    setReviews([]);
+  }
+
   async function proceedReviewWithSelectedShop(selectedShop) {
     try {
       // Send data for selected shop
@@ -75,7 +80,8 @@ function ViewWindow({ messages, setMessages }) {
         <div className="ReviewsView">
           <button
             className="mb-4 p-2 bg-blue-500 text-white rounded"
-            onClick={() => setSelectedShop(null)}
+            // onClick={() => setSelectedShop(null)}
+            onClick={handleBackToShopsClick}
           >
             Back to Shops
           </button>
