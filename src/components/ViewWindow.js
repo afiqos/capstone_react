@@ -80,7 +80,6 @@ function ViewWindow({ messages, setMessages }) {
         <div className="ReviewsView">
           <button
             className="mb-4 p-2 bg-blue-500 text-white rounded"
-            // onClick={() => setSelectedShop(null)}
             onClick={handleBackToShopsClick}
           >
             Back to Shops
@@ -100,9 +99,6 @@ function ViewWindow({ messages, setMessages }) {
           ))}
         </div>
       )}
-      {/* {viewShops.map((shop, index) => (
-          <ShopCard key={index} shop={shop} onClick={handleShopCardClick} />
-        ))} */}
     </div>
   );
 }
