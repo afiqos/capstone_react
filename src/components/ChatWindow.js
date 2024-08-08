@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setShops } from "../store/shopSlice";
+import { setIntent, setShops } from "../store/shopSlice";
 
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
@@ -85,6 +85,7 @@ function ChatWindow({messages, setMessages}) {
 
       // Take viewShops and initialize ViewWindow grid with ShopCards
       dispatch(setShops(msg.viewShops));
+      dispatch(setIntent(msg.intent));
     } catch (e) {
       console.error(e);
     }

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { selectShops, setShops } from "../store/shopSlice";
+import { getIntent, selectShops, setShops } from "../store/shopSlice";
 import ShopCard from "./ShopCard";
 import ReviewCard from "./ReviewCard";
 import { useState } from "react";
@@ -11,14 +11,18 @@ function ViewWindow({ messages, setMessages }) {
 
   const dispatch = useDispatch();
   const viewShops = useSelector(selectShops);
+  const intent = useSelector(getIntent);
 
   function handleShopCardClick(shop) {
-    // proceedReviewWithSelectedShop(shop);
-    // dispatch(setShops([])); // clear the view
+    if (intent == "ADD_REVIEW") {
+      proceedReviewWithSelectedShop(shop);
+      dispatch(setShops([])); // clear the view
 
-    setSelectedShop(shop);
-    if (shop.reviews.length != 0) {
-      setReviews(shop.reviews);
+    } else if (intent == "RECOMMEND") {
+      setSelectedShop(shop);
+      if (shop.reviews.length != 0) {
+        setReviews(shop.reviews);
+      }
     }
   }
 
