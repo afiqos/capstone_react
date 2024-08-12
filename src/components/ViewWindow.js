@@ -85,7 +85,10 @@ function ViewWindow({ messages, setMessages }) {
             Back to Shops
           </button>
           {reviews.map((review) => (
-            <ReviewCard key={review.reviewId} review={review} />
+            <div>
+              <ReviewCard key={review.reviewId} review={review} />
+              <hr className="my-12 mx-auto" style={{ width: "55%" }}/>
+            </div>
           ))}
         </div>
       ) : (
