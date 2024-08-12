@@ -5,9 +5,13 @@ import { setIntent, setShops } from "../store/shopSlice";
 import BotChatBubble from "./BotChatBubble";
 import UserChatBubble from "./UserChatBubble";
 
+import sendIcon from "../assets/send-message.png";
+import attachIcon from "../assets/attachment_237510.png";
+
 function ChatWindow({ messages, setMessages }) {
   const dispatch = useDispatch();
   const [enableChatInput, setEnableChatInput] = useState(true);
+  const [enableImageUpload, setEnableImageUpload] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
@@ -104,13 +108,14 @@ function ChatWindow({ messages, setMessages }) {
   }
 
   function handleTextInputChange(e) {
-    if (e.target.value.length <= 140) { // limit input to 140 characters
+    if (e.target.value.length <= 140) {
+      // limit input to 140 characters
       setNewMessage(e.target.value);
     }
   }
 
   function handleEnterKeyDown(event) {
-    if (event.key === "Enter" && enableChatInput && newMessage.trim() !== '') {
+    if (event.key === "Enter" && enableChatInput && newMessage.trim() !== "") {
       handleSendMessage(event);
     }
   }
@@ -177,20 +182,31 @@ function ChatWindow({ messages, setMessages }) {
         {mappedMessages}
         <div ref={messagesEndRef} />
       </div>
-      <div className="flex items-center p-2 border-2 border-gray-100 rounded-xl bg-white shadow-lg">
-        <label className="py-2 px-4 bg-blue-500 text-white rounded-xl hover:bg-blue-600 cursor-pointer">
-          Add Image
+      <div className="flex items-center border-2 border-gray-100 rounded-xl bg-white shadow-lg">
+        <label
+          className={`py-2 px-2 text-white rounded-xl ${
+            enableImageUpload ? "cursor-pointer" : "cursor-not-allowed"
+          }`}
+        >
+          <img
+            src={attachIcon}
+            alt="Add Image"
+            className={`w-5 h-5 ${
+              enableImageUpload ? "opacity-100" : "opacity-50"
+            }`}
+          />
           <input
             type="file"
             name="imageFile"
             onChange={handleFileChange}
             className="hidden"
+            disabled={!enableImageUpload}
           />
         </label>
         <input
           type="text"
           placeholder="Type your message..."
-          className="flex-1 mx-2 p-2 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 p-2 border-none rounded-lg focus:outline-none"
           value={newMessage}
           onChange={handleTextInputChange}
           onKeyDown={handleEnterKeyDown}
@@ -198,12 +214,22 @@ function ChatWindow({ messages, setMessages }) {
         <button
           type="submit"
           className={`py-2 px-4 rounded-xl focus:outline-none ${
-            enableChatInput && newMessage.trim() !== '' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'
+            !enableChatInput || newMessage.trim() === ""
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
           }`}
           onClick={handleSendMessage}
-          disabled={!enableChatInput || newMessage.trim() === ''}
+          disabled={!enableChatInput || newMessage.trim() === ""}
         >
-          Send
+          <img
+            src={sendIcon}
+            alt="Send"
+            className={`w-5 h-5 ${
+              enableChatInput && newMessage.trim() !== ""
+                ? "opacity-100"
+                : "opacity-50"
+            }`}
+          />
         </button>
       </div>
     </div>
