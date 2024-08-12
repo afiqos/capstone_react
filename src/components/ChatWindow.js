@@ -16,20 +16,23 @@ function ChatWindow({ messages, setMessages }) {
   const [mappedMessages, setMappedMessages] = useState([]);
   const messagesEndRef = useRef(null);
 
-  function scrollToBottom() {
-    setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
-    }, 100);
-  }
+  // function scrollToBottom() {
+  //   setTimeout(() => {
+  //     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+  //   }, 100);
+  // }
 
   function mapBotAndUserMessages() {
-    const mapped = messages.map((message, index) =>
-      message.sender === "user" ? (
-        <UserChatBubble key={index} message={message.text} />
-      ) : (
-        <BotChatBubble key={index} message={message.text} />
-      )
-    );
+    const mapped = messages
+      .slice() // Make a shallow copy of the messages array
+      .reverse() // Reverse the order of messages
+      .map((message, index) =>
+        message.sender === "user" ? (
+          <UserChatBubble key={index} message={message.text} />
+        ) : (
+          <BotChatBubble key={index} message={message.text} />
+        )
+      );
     setMappedMessages(mapped);
   }
 
@@ -39,7 +42,7 @@ function ChatWindow({ messages, setMessages }) {
     -> infinite loop -> API money = 0;
   */
   useEffect(() => {
-    scrollToBottom();
+    // scrollToBottom();
     mapBotAndUserMessages();
   }, [messages]);
 
@@ -177,12 +180,12 @@ function ChatWindow({ messages, setMessages }) {
   }
 
   return (
-    <div className="ChatWindow flex flex-col h-screen p-4">
-      <div className="flex-1 space-y-4 px-4 h-full overflow-y-auto">
+    <div className="ChatWindow flex flex-col h-screen p-3">
+      <div className="MessageArea flex-1 flex flex-col-reverse space-y-4 px-4 pb-4 h-full overflow-y-auto">
         {mappedMessages}
-        <div ref={messagesEndRef} />
+        {/* <div ref={messagesEndRef} /> */}
       </div>
-      <div className="flex items-center border-2 border-gray-100 rounded-xl bg-white shadow-lg">
+      <div className="InputArea flex items-center border-2 border-gray-100 rounded-xl bg-white shadow-lg">
         <label
           className={`py-2 px-2 text-white rounded-xl ${
             enableImageUpload ? "cursor-pointer" : "cursor-not-allowed"
