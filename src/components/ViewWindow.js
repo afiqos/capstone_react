@@ -119,7 +119,7 @@ function ViewWindow({ messages, setMessages }) {
           ))}
         </div>
       ) : (
-        <div className="GridView grid grid-cols-3 gap-4">
+        <div className="p-4 GridView grid grid-cols-3 gap-4">
           {viewShops.map((shop, index) => (
             <ShopCard
               key={index}
