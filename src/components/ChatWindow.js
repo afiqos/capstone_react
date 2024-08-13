@@ -103,6 +103,8 @@ function ChatWindow({ messages, setMessages }) {
       // Take viewShops and initialize ViewWindow grid with ShopCards
       dispatch(setShops(msg.viewShops));
       dispatch(setIntent(msg.intent));
+
+      setEnableImageUpload(msg.intent === "ADD_REVIEW" ? true : false);
     } catch (e) {
       console.error(e);
     } finally {

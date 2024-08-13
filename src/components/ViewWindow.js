@@ -82,7 +82,7 @@ function ViewWindow({ messages, setMessages }) {
     <div className="ViewWindow h-full overflow-y-scroll">
       {selectedShop ? (
         <div className="ReviewsView">
-          <div className="Header bg-[#FAFAFA] p-4 grid grid-cols-[auto_1fr] gap-4 items-center">
+          <div className="Header bg-[#FAFAFA] p-4 mb-4 grid grid-cols-[auto_1fr] gap-4 items-center">
             <button
               className="w-16 h-16 flex items-center justify-center mr-4 bg-[#DDDDDD] rounded-full text-black hover:bg-[#9D9D9D]"
               onClick={handleBackToShopsClick}
