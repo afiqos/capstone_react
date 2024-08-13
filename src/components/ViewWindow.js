@@ -6,8 +6,8 @@ import ReviewCard from "./ReviewCard";
 import RatingBubble from "./RatingBubble";
 import { useState } from "react";
 
-import whiteArrow from "../assets/WhiteArrow.png";
 import blackArrow from "../assets/BlackArrow.png";
+import noReviewGif from "../assets/sad.gif";
 
 function ViewWindow({ messages, setMessages }) {
   const [selectedShop, setSelectedShop] = useState(null);
@@ -87,11 +87,7 @@ function ViewWindow({ messages, setMessages }) {
               className="w-16 h-16 flex items-center justify-center mr-4 bg-[#DDDDDD] rounded-full text-black hover:bg-[#9D9D9D]"
               onClick={handleBackToShopsClick}
             >
-              <img
-                src={blackArrow}
-                alt="Back"
-                className="w-3 h-3"
-              />
+              <img src={blackArrow} alt="Back" className="w-3 h-3" />
             </button>
             <div className="flex flex-col space-y-1 text-black">
               <div className="mb-2 flex justify-start items-center">
@@ -111,12 +107,19 @@ function ViewWindow({ messages, setMessages }) {
               </div>
             </div>
           </div>
-          {reviews.map((review) => (
-            <div>
-              <ReviewCard key={review.reviewId} review={review} />
-              <hr className="my-12 mx-auto" style={{ width: "53%" }} />
+          {reviews.length === 0 ? (
+            <div className="flex justify-center items-center">
+              <img className="mr-4" src={noReviewGif} alt="No review" /> 
+              <p>No reviews found.<br/>Please come visit me soon</p>
             </div>
-          ))}
+          ) : (
+            reviews.map((review) => (
+              <div key={review.reviewId}>
+                <ReviewCard review={review} />
+                <hr className="my-12 mx-auto" style={{ width: "53%" }} />
+              </div>
+            ))
+          )}
         </div>
       ) : (
         <div className="p-4 GridView grid grid-cols-3 gap-4">
