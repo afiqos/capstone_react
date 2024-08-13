@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 import { getIntent, selectShops, setShops } from "../store/shopSlice";
 import ShopCard from "./ShopCard";
 import ReviewCard from "./ReviewCard";
+import RatingBubble from "./RatingBubble";
 import { useState } from "react";
+
+import whiteArrow from "../assets/WhiteArrow.png";
+import blackArrow from "../assets/BlackArrow.png";
 
 function ViewWindow({ messages, setMessages }) {
   const [selectedShop, setSelectedShop] = useState(null);
@@ -75,19 +79,42 @@ function ViewWindow({ messages, setMessages }) {
   }
 
   return (
-    <div className="ViewWindow h-full overflow-y-scroll p-4">
+    <div className="ViewWindow h-full overflow-y-scroll">
       {selectedShop ? (
         <div className="ReviewsView">
-          <button
-            className="mb-4 p-2 bg-blue-500 text-white rounded"
-            onClick={handleBackToShopsClick}
-          >
-            Back to Shops
-          </button>
+          <div className="Header bg-[#FAFAFA] p-4 grid grid-cols-[auto_1fr] gap-4 items-center">
+            <button
+              className="w-16 h-16 flex items-center justify-center mr-4 bg-[#DDDDDD] rounded-full text-black hover:bg-[#9D9D9D]"
+              onClick={handleBackToShopsClick}
+            >
+              <img
+                src={blackArrow}
+                alt="Back"
+                className="w-3 h-3"
+              />
+            </button>
+            <div className="flex flex-col space-y-1 text-black">
+              <div className="mb-2 flex justify-start items-center">
+                <RatingBubble rating={selectedShop.averageRating} />
+                <p className="ml-4 font-bold text-2xl">
+                  {selectedShop.shopName}
+                </p>
+              </div>
+              <div className="flex">
+                <p className="mr-2">{selectedShop.halalType},</p>
+                <p>{selectedShop.cuisineType}</p>
+              </div>
+              <div className="flex">
+                <p>
+                  {selectedShop.address}, {selectedShop.estate}
+                </p>
+              </div>
+            </div>
+          </div>
           {reviews.map((review) => (
             <div>
               <ReviewCard key={review.reviewId} review={review} />
-              <hr className="my-12 mx-auto" style={{ width: "55%" }}/>
+              <hr className="my-12 mx-auto" style={{ width: "53%" }} />
             </div>
           ))}
         </div>

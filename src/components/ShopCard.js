@@ -1,5 +1,5 @@
 import defaultShopImg from "../assets/defaultShopLogo.png";
-import star from "../assets/star-blue.png";
+import RatingBubble from "./RatingBubble";
 
 function ShopCard({ shop, onClick }) {
   function handleCardClick() {
@@ -25,10 +25,7 @@ function ShopCard({ shop, onClick }) {
       <div className="flex-1 p-3">
         <div className="flex justify-between items-center mb-2">
           <p className="text-left text-lg font-semibold">{shop.shopName}</p>
-          <p className="bg-[#4397f7] text-white text-xs font-medium flex items-center space-x-1 py-1 px-1 rounded-lg">
-            <img src={star} className="w-4 h-4" alt="Star icon" />
-            <span className="w-3 h-4">{shop.averageRating}</span>
-          </p>
+          <RatingBubble rating={shop.averageRating} />
         </div>
         <p className="text-sm text-gray-600">
           {shop.cuisineType}, {shop.halalType}
