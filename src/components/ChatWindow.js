@@ -190,7 +190,7 @@ function ChatWindow({ messages, setMessages }) {
   }
 
   return (
-    <div className="ChatWindow flex flex-col h-screen p-3">
+    <div className="ChatWindow flex flex-col h-screen px-3 pb-3">
       <div className="MessageArea flex-1 flex flex-col-reverse space-y-4 px-4 pb-4 h-full overflow-y-auto">
         {mappedMessages}
         {/* <div ref={messagesEndRef} /> */}
