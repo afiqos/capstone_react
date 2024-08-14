@@ -24,16 +24,24 @@ function ChatWindow({ messages, setMessages }) {
 
   function mapBotAndUserMessages() {
     const mapped = messages
-      .slice() // Make a shallow copy of the messages array
-      .reverse() // Reverse the order of messages
-      .map((message, index) =>
-        message.sender === "user" ? (
-          <UserChatBubble key={index} message={message.text} />
-        ) : (
-          <BotChatBubble key={index} message={message.text} />
-        )
-      );
-    setMappedMessages(mapped);
+    .map((message, index) =>
+      message.sender === "user" ? (
+        <UserChatBubble
+          key={index}
+          message={message.text}
+          isLatest={index === messages.length - 1}
+        />
+      ) : (
+        <BotChatBubble
+          key={index}
+          message={message.text}
+          isLatest={index === messages.length - 1}
+        />
+      )
+    )
+    .reverse(); // Reverse the order of messages
+
+  setMappedMessages(mapped);
   }
 
   /*
