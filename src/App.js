@@ -1,19 +1,31 @@
-import './App.css';
-import React, { useState } from 'react';
+import "./App.css";
+import React, { useState } from "react";
 import ChatWindow from "./components/ChatWindow";
-import ViewWindow from './components/ViewWindow';
+import ViewWindow from "./components/ViewWindow";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const [messages, setMessages] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  function handleLoadComplete() {
+    setIsLoaded(true);
+  }
 
   return (
-    <div className="App flex h-screen">
-      <div className="w-2/5 border-r border-gray-100">
-        <ChatWindow messages={messages} setMessages={setMessages}/>
-      </div>
-      <div className="w-3/5">
-        <ViewWindow messages={messages} setMessages={setMessages}/>
-      </div>
+    <div className="App">
+      {!isLoaded ? (
+        <LandingPage onLoadComplete={handleLoadComplete} />
+      ) : (
+        <div className="App flex h-screen">
+          <div className="w-2/5 border-r border-gray-100">
+            <ChatWindow messages={messages} setMessages={setMessages} />
+          </div>
+          <div className="w-3/5">
+            <ViewWindow messages={messages} setMessages={setMessages} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
