@@ -30,7 +30,7 @@ function ShopCard({ shop, onClick }) {
         <p className="text-sm text-gray-600">
           {shop.cuisineType}, {shop.halalType}
         </p>
-        <p className="text-sm text-gray-600 mt-1">{shop.address}</p>
+        <p className="text-sm text-gray-600 mt-1 font-semibold">{shop.address}</p>
       </div>
     </div>
   );
