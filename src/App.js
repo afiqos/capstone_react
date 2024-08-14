@@ -13,20 +13,29 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {!isLoaded ? (
-        <LandingPage onLoadComplete={handleLoadComplete} />
-      ) : (
-        <div className="App flex h-screen">
-          <div className="w-2/5 border-r border-gray-100">
-            <ChatWindow messages={messages} setMessages={setMessages} />
-          </div>
-          <div className="w-3/5">
-            <ViewWindow messages={messages} setMessages={setMessages} />
-          </div>
-        </div>
-      )}
+    <div className="App flex h-screen">
+      <div className="w-2/5 border-r border-gray-100">
+        <ChatWindow messages={messages} setMessages={setMessages} />
+      </div>
+      <div className="w-3/5">
+        <ViewWindow messages={messages} setMessages={setMessages} />
+      </div>
     </div>
+    // <div className="App">
+
+    //   {!isLoaded ? (
+    //     <LandingPage onLoadComplete={handleLoadComplete} />
+    //   ) : (
+    //     <div className="App flex h-screen">
+    //       <div className="w-2/5 border-r border-gray-100">
+    //         <ChatWindow messages={messages} setMessages={setMessages} />
+    //       </div>
+    //       <div className="w-3/5">
+    //         <ViewWindow messages={messages} setMessages={setMessages} />
+    //       </div>
+    //     </div>
+    //   )}
+    // </div>
   );
 }
 

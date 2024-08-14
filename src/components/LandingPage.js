@@ -13,22 +13,22 @@ function LandingPage({ onLoadComplete }) {
         }
         return nextProgress;
       });
-    }, 30); // Increase progress every 30ms
+    }, 15); // Increase progress every ms
 
     return () => clearInterval(interval);
   }, [onLoadComplete]);
 
   return (
     <div className="LandingPage h-screen flex flex-col justify-center items-center bg-black">
-      <div className="text-white text-4xl mb-8">I am loading...</div>
-      <div className="w-1/2 bg-gray-200 rounded-full">
+      <div className="text-white text-4xl mb-8">Splash screen</div>
+      {/* <div className="w-1/2 bg-gray-200 rounded-full">
         <div
           className="bg-blue-600 text-xs leading-none py-1 text-center text-white rounded-full"
           style={{ width: `${progress}%` }}
         >
           <p>{progress}%</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
