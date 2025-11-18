@@ -27,14 +27,11 @@ It should be as easy as texting someone.
 # Getting it running
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Install npm and node on your machine
-
-## Clone repo to local
-
-## Install node_modules within project folder 
+1) Install npm and node on your machine
+2) Clone repo to local
+3) Install node_modules within project folder 
 `npm install`
-
-## Start application 
+4) Start application 
 `npm start`
 
 
