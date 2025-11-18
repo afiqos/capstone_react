@@ -1,73 +1,45 @@
-# Front end for TFIP Capstone project
+# TFIP Capstone: WeEat
+
+## Motivation
+I created this project to solve my girlfriend's question: "Where should we eat later?"
+
+The idea was something that understands where we are heading to and what we are craving, then gives us food spot
+suggestions that matches our preferences. Not quite another tool that searches Google for nearby restaurants with good 
+ratings. I wanted it to be personal with only food spots we have added. Hence, can save food spots we want to try in the
+future and later leave our own reviews after visiting them.
 
 
-# Getting Started with Create React App
+You might ask why not just rely on Google reviews?
+- We have had plenty of experiences where a place with great online reviews didn't meet our expectations. No shade to anyone
+ as everyone has different taste buds :)
+- I wanted a way to keep track and ensure we visit the food spots shared by my girlfriend. Previously, 
+this was done manually through an excel sheet.
+- Searching on Google for food places usually bombards you with a ton of choices and many of these are not quite relevant.
 
+## UI/UX decision
+I decided to keep the frontend simple with a chatbot style of getting things done. When thinking of my own usage of the app
+I would not be bothered and turned off if I had to learn and navigate through multiple pages of UI to get things done.
+It should be as easy as texting someone.
+
+[Figma](https://www.figma.com/design/czRdDJPJrQdWJuMm7o1sJm/TFIP-Capstone?node-id=0-1&t=RV7uSQXcIUpdUEiG-1)
+(not the final outcome but was at least the vision)
+
+# Getting it running
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Install npm and node on your machine
 
-In the project directory, you can run:
+## Clone repo to local
 
-### `npm start`
+## Install node_modules within project folder 
+`npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Start application 
+`npm start`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
